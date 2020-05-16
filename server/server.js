@@ -23,7 +23,7 @@ async function image(req,res){
   console.log(descriptions)
   }
 //Call function
-image();
+//image();
 
 
 
@@ -31,24 +31,22 @@ image();
 var unirest = require('unirest');
 
 //searches the food
-var req = unirest("GET", "https://nutritionix-api.p.rapidapi.com/v1_1/search/cheese%2520cheese");
+app.get = "https://trackapi.nutritionix.com/v2/natural/nutrients"
 
-req.query({
-	"fields": "item_name%2Cnf_calories%2Cnf_total_fat"
+app.headers({
+  "Content-Type" : "application/json", 
+  "x-app-id" : "0be25bad",
+  "x-app-key" : "dbbf560fe2b7bb29bbc243fa80a4d309"
 });
 
-req.headers({
-	"x-rapidapi-host": "nutritionix-api.p.rapidapi.com",
-	"x-rapidapi-key": "2ed1a5be6emshc43763ec17ac9e3p1b4e24jsn9d02e0625f12",
-	"useQueryString": true
-});
-
-
-req.end(function (res) {
-	if (res.error) throw new Error(res.error);
+app.query(
+  {
+    "query":"banana",
+   }
+   );
 
 	console.log(res.body);
-});
+
 
 //api endpoint returning the fields from nutrtionix
 app.get('/api/getfields', (req,res) => {
