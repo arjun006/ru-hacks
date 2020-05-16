@@ -1,30 +1,37 @@
 const express = require('express');
 var cors = require('cors');
 
-const vision = require('@google-cloud/vision');
+
 
 const app = express();
-  // Creates a client
+
+
+descriptions = [];
+
+// Performs label detection on the image file
+async function image(req,res){
+  const vision = require('@google-cloud/vision');
+// Creates a client
   const client = new vision.ImageAnnotatorClient({
     keyFilename: 'API-vision.json'
   });
-
-  // Performs label detection on the image file
-  async function image(req,res){
+  
   const [result] = await client.labelDetection('./meme.png');
   const labels = result.labelAnnotations;
-  console.log('Labels:');
-  labels.forEach(label => console.log(label.description));
+//Stores result into array
+  labels.forEach(label => descriptions.push(label.description));
+  console.log(descriptions)
   }
-  //Call function
+//Call function
 image();
+
 
 
 //nutritionix (install unirest)
 var unirest = require('unirest');
 
 //searches the food
-var req = unirest("GET", "https://nutritionix-api.p.rapidapi.com/v1_1/search/cheddar%2520cheese");
+var req = unirest("GET", "https://nutritionix-api.p.rapidapi.com/v1_1/search/cheese%2520cheese");
 
 req.query({
 	"fields": "item_name%2Cnf_calories%2Cnf_total_fat"
@@ -41,6 +48,11 @@ req.end(function (res) {
 	if (res.error) throw new Error(res.error);
 
 	console.log(res.body);
+});
+
+//api endpoint returning the fields from nutrtionix
+app.get('/api/getfields', (req,res) => {
+
 });
 
 app.get("/", (req, res) => {
