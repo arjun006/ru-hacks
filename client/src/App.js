@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Home from './pages/Home'
 import Form from './pages/Form'
+import Info from './pages/Info'
 
 
 
@@ -22,6 +23,7 @@ function App() {
       <Switch>
         <Route exact path = '/' component = {Home}></Route>
         <Route path = '/form' component = {Form}></Route>
+        <Route path = '/info' component = {Info}></Route>
       </Switch>
     </Router>
   );
