@@ -2,19 +2,30 @@ import React from "react";
 import { MDBCol, MDBIcon, MDBContainer, MDBAnimation, MDBRow } from "mdbreact";
 import Navbar from "../components/navbar";
 import axios from "axios";
+const headers = {
+    'accept': 'application/json',
+    'x-app-id': '0be25bad',
+    'x-app-key': '27c1585453778711674404d293fea72d',
+    'x-remote-user-id': '0',
+    'Content-Type': 'application/json'
+};
+
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       options: [],
-      value: "pick an option",
       file: {
         name: "submit image",
       },
+      isUpload: false,
+      food: "none",
     };
     this.onChange = this.onChange.bind(this);
     this.onClickHandler = this.onClickHandler.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.onClickOption = this.onClickOption.bind(this);
   }
 
   onClickHandler = (e) => {
@@ -28,8 +39,25 @@ class Form extends React.Component {
       })
       .then((res) => {
         // then print response status
-        console.log(res.statusText);
+        this.setState({ options: res.data, isUpload: true });
       });
+  };
+  handleChange = (e) => {
+    let name = e.target.name;
+    this.setState({ [name]: e.target.value });
+    console.log(this.state);
+  };
+
+  onClickOption = () => {
+    let data = {food: this.state.food};
+    console.log(data);
+    fetch('http://localhost:5000/data', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data)
+}).then(res=>console.log(res));
   };
   onChange = (e) => {
     this.setState({ file: e.target.files[0] });
@@ -62,7 +90,7 @@ class Form extends React.Component {
             </MDBCol>
           </MDBRow>
           <MDBRow className="d-flex justify-content-end">
-            <MDBCol md="4" className="mt-5">
+            <MDBCol md="4" className="mt-3">
               <button
                 type="button"
                 class="btn btn-success btn-block"
@@ -73,6 +101,38 @@ class Form extends React.Component {
               </button>
             </MDBCol>
           </MDBRow>
+          {this.state.isUpload ? (
+            <div>
+              <h4 className='mt-3'>pick the food:</h4>
+              <select
+                className="form-select"
+                value={this.state.food}
+                onChange={this.handleChange}
+                name="food"
+              >
+                <option value="none" disabled hidden>
+                  Pick an Option
+                </option>
+                {this.state.options.map((item, i) => {
+                  return (
+                    <option className="stylish-color" value={item} key={i}>
+                      {item}
+                    </option>
+                  );
+                })}
+              </select>
+              <button
+                type="button"
+                class="btn btn-success btn-block mt-5"
+                onClick={this.onClickOption}
+              >
+                <MDBIcon icon="file-upload" className="mx-2" />
+                Send Your Option
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </MDBCol>
       </div>
     );

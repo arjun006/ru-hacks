@@ -5,8 +5,9 @@ const up = require('./routes/api/upload');
 const bodyParser = require('body-parser');
 const multer = require("multer");
 const cors = require('cors');
-
+const request = require('request');
 const app = express();
+
 
 
 app.use(cors());
@@ -41,10 +42,14 @@ app.post('/img',function(req, res) {
          } else if (err) {
              return res.status(500).json(err)
          }
-         image().then(data=>{resp.send(data)});
+         image().then(data=>{res.send(data)});
 
   })
-
+});
+app.post('/data',function(req, res) {
+  let food = req.body.food;
+  console.log(typeof food);
+  nutrition(food);
 });
 
 app.get("/", (req, res) => {
@@ -67,6 +72,45 @@ app.get("/", (req, res) => {
     let desc = JSON.stringify(descriptions);
     return desc;
     }
+
+
+    
+function nutrition(food){
+
+  var headers = {
+    'accept': 'application/json',
+    'x-app-id': '0be25bad',
+    'x-app-key': '27c1585453778711674404d293fea72d',
+    'x-remote-user-id': '0',
+    'Content-Type': 'application/json'
+};
+
+ dataString={'query':food};
+ dataString= dataString.toString();
+
+var options = {
+    url: 'https://trackapi.nutritionix.com/v2/natural/nutrients',
+    method: 'POST',
+    headers: headers,
+    body: dataString
+};
+
+function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      body = JSON.parse(body);
+      calories = body.foods[0].nf_calories;
+      total_fat = body.foods[0].nf_total_fat
+      console.log(calories);
+    } else {
+      console.log("Not Found")
+    }
+}
+
+request(options, callback);
+}
+
+
+
 const PORT = process.env.PORT || 5000;
   
 app.listen(PORT, ()=>{console.log(`Server running on ${PORT}`)});

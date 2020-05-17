@@ -19,7 +19,6 @@ class Home extends React.Component{
                     <MDBCol className="text-center mt-5">
                     <MDBAnimation type="fadeInRight" duration = '3s'>
                         <a className="btn pr-4" href="/form" role="button">See Nutrition info <MDBIcon far icon="eye" className='eye-icon' /></a>
-                        <a className="btn pr-4" href="/report" role="button">View Report <MDBIcon far icon="eye" className='eye-icon' /> </a>
                     </MDBAnimation>  
                     </MDBCol>
                 </MDBContainer>
