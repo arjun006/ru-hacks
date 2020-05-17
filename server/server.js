@@ -1,6 +1,5 @@
 const express = require('express');
 const nutrionix = require ('./nutritionix.js');
-const vision = require ('./vision.js')
 const up = require('./routes/api/upload');
 const bodyParser = require('body-parser');
 const multer = require("multer");
@@ -41,7 +40,7 @@ app.post('/img',function(req, res) {
          } else if (err) {
              return res.status(500).json(err)
          }
-         image().then(data=>{resp.send(data)});
+         image().then(data=>{res.send(data)});
 
   })
 
