@@ -35,10 +35,7 @@ class Navbar extends React.Component{
                     </MDBNavItem>
                     <MDBNavItem>
                         <MDBNavLink to="/form">Form</MDBNavLink>
-                    </MDBNavItem>
-                    <MDBNavItem>
-                        <MDBNavLink to="/report">Report</MDBNavLink>
-                    </MDBNavItem>
+                    </MDBNavItem>>
                     </MDBNavbarNav>
                 </MDBCollapse>
                 </MDBNavbar>

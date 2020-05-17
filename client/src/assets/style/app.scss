@@ -25,6 +25,23 @@ body,
     border-radius: 15px;
   }
 }
+.form-select{
+  display: inline-block;
+  width: 60%;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem 1.75rem .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 100;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  color: white;
+  vertical-align: middle;
+  background: #364f6b ;
+  border-style: none;
+  border-bottom: 1px solid #fff ;
+  border-radius: 3px;
+
+}
 .Home {
   color: white;
   
