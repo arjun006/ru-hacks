@@ -41,12 +41,15 @@ class Form extends React.Component {
   };
 
   onClickOption = () => {
-    let food = this.state.food;
-    console.log(typeof this.state.food);
-    axios
-    .post("http://localhost:5000/data", this.state.food, {
-      // receive two    parameter endpoint url ,form data
-    }).then(res=>console.log(res));
+    let data = {food: this.state.food};
+    console.log(data);
+    fetch('http://localhost:5000/data', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data)
+}).then(res=>console.log(res));
   };
   onChange = (e) => {
     this.setState({ file: e.target.files[0] });
@@ -92,7 +95,7 @@ class Form extends React.Component {
           </MDBRow>
           {this.state.isUpload ? (
             <div>
-              <p>pick the food:</p>
+              <h4 className='mt-3'>pick the food:</h4>
               <select
                 className="form-select"
                 value={this.state.food}
