@@ -1,6 +1,7 @@
 import React from "react";
 import { MDBCol, MDBIcon, MDBContainer, MDBAnimation, MDBRow } from "mdbreact";
 import Navbar from "../components/navbar";
+import axios from "axios";
 
 class Form extends React.Component {
   constructor(props) {
@@ -16,11 +17,20 @@ class Form extends React.Component {
     this.onClickHandler = this.onClickHandler.bind(this);
   }
 
-  onClickHandler = e =>{
-        console.log(this.state);
-        const data = new FormData(); 
-        data.append('file', this.state.selectedFile);
-  }
+  onClickHandler = (e) => {
+    console.log(this.state);
+    const data = new FormData();
+    data.append("file", this.state.file);
+    console.log(data);
+    axios
+      .post("http://localhost:5000/img", data, {
+        // receive two    parameter endpoint url ,form data
+      })
+      .then((res) => {
+        // then print response status
+        console.log(res.statusText);
+      });
+  };
   onChange = (e) => {
     this.setState({ file: e.target.files[0] });
   };
@@ -51,14 +61,14 @@ class Form extends React.Component {
               </div>
             </MDBCol>
           </MDBRow>
-          <MDBRow className='d-flex justify-content-end'>
+          <MDBRow className="d-flex justify-content-end">
             <MDBCol md="4" className="mt-5">
               <button
                 type="button"
                 class="btn btn-success btn-block"
                 onClick={this.onClickHandler}
               >
-                <MDBIcon icon="file-upload" className='mx-2' />
+                <MDBIcon icon="file-upload" className="mx-2" />
                 Upload
               </button>
             </MDBCol>

@@ -1,25 +1,25 @@
-const express = require('express');
+// const express = require('express');
 
-//Cloud Vision
+// //Cloud Vision
 
 
-// Performs label detection on the image file
-async function image(req,res){
-    descriptions = [];
-    const vision = require('@google-cloud/vision');
-  // Creates a client
-    const client = new vision.ImageAnnotatorClient({
-      keyFilename: 'API-vision.json'
-    });
+// // Performs label detection on the image file
+// async function image(req,res){
+//     descriptions = [];
+//     const vision = require('@google-cloud/vision');
+//   // Creates a client
+//     const client = new vision.ImageAnnotatorClient({
+//       keyFilename: 'API-vision.json'
+//     });
     
-    const [result] = await client.labelDetection('Fried Rice.jpg');
-    const labels = result.labelAnnotations;
-  //Stores result into array
-    labels.forEach(label => descriptions.push(label.description));
-    console.log(JSON.stringify(descriptions))
-    }
+//     const [result] = await client.labelDetection('Fried Rice.jpg');
+//     const labels = result.labelAnnotations;
+//   //Stores result into array
+//     labels.forEach(label => descriptions.push(label.description));
+//     console.log(JSON.stringify(descriptions))
+//     }
+    
+// //Function call
+//   image()
 
-//Function call
-  image()
-
-module.export = 'vision.js'
+// module.export = 'vision.js'
