@@ -16,30 +16,10 @@ async function image(req,res){
     const labels = result.labelAnnotations;
   //Stores result into array
     labels.forEach(label => descriptions.push(label.description));
-    //console.log(descriptions)
-    return descriptions
+    console.log(JSON.stringify(descriptions))
     }
-  //Filters Label for client's to choose from
-  function filter(descriptions)
-  {    
-      var fdescription = [];
-  for (var i = 0; i < descriptions.length; i++)
-  {
-
-      if (descriptions[i] != "Food" && descriptions[i] != "Dish" && descriptions[i] != "Cuisine" && descriptions[i] != "Ingredient")
-      {
-          fdescription.push(descriptions[i]);
-      }
-      
-  }
-  console.log(fdescription)
-  return fdescription
-}
 
 //Function call
   image()
-  filter(descriptions)
-
-
 
 module.export = 'vision.js'
