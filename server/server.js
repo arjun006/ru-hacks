@@ -1,6 +1,4 @@
 const express = require('express');
-//const nutrionix = require ('./nutritionix.js');
-//const up = require('./routes/api/upload');
 const bodyParser = require('body-parser');
 const multer = require("multer");
 const cors = require('cors');
@@ -8,13 +6,8 @@ const request = require('request');
 const app = express();
 
 
-
 app.use(cors());
 app.use(bodyParser.json());
-//app.use('/api/upload', up);
-
-//image receiving
-
 
 const handleError = (err, res) => {
   res
@@ -45,11 +38,7 @@ app.post('/img',function(req, res) {
 
   })
 });
-app.post('/data',function(req, res) {
-  let food = req.body.food;
-  console.log(typeof food);
-  nutrition(food);
-});
+
 
 app.get("/", (req, res) => {
     res.send('server started');
@@ -72,40 +61,45 @@ app.get("/", (req, res) => {
     return desc;
     }
 
-
-    
-function nutrition(food){
+//nutritionix
+app.post('/data',function(req, res) {
+  let food = req.body.food;
+  nutrition(food, res);
+});
+function nutrition(food, res){
 
   var headers = {
     'accept': 'application/json',
-    'x-app-id': '0be25bad',
-    'x-app-key': '27c1585453778711674404d293fea72d',
+    'x-app-id': '093ca533',
+    'x-app-key': '66bc88c6701d5ecc65e9b592d8c341ad',
     'x-remote-user-id': '0',
     'Content-Type': 'application/json'
 };
 
  dataString=`{"query": "${food}"}`;
 
-console.log(dataString);
 var options = {
     url: 'https://trackapi.nutritionix.com/v2/natural/nutrients',
     method: 'POST',
     headers: headers,
     body: dataString
 };
-
+var nutrients = [];
 function callback(error, response, body) {  
     if (!error && response.statusCode == 200) {
       body = JSON.parse(body);
       calories = body.foods[0].nf_calories;
-      total_fat = body.foods[0].nf_total_fat
-      console.log(calories);
+      total_fat = body.foods[0].nf_total_fat;
+      nutrients.push(calories)
+      res.send(nutrients)
     } else {
       console.log("Not Found")
     }
 }
 
 request(options, callback);
+
+return nutrients;
 }
 
 
