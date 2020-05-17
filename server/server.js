@@ -41,7 +41,7 @@ app.post('/img',function(req, res) {
          } else if (err) {
              return res.status(500).json(err)
          }
-         image().then(data=>{resp.send(data)});
+         image().then(data=>{res.send(data)});
 
   })
 
