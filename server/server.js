@@ -23,30 +23,40 @@ async function image(req,res){
   console.log(descriptions)
   }
 //Call function
-//image();
+image();
 
+var request = require('request');
 
+var headers = {
+    'accept': 'application/json',
+    'x-app-id': '0be25bad',
+    'x-app-key': '27c1585453778711674404d293fea72d',
+    'x-remote-user-id': '0',
+    'Content-Type': 'application/json'
+};
 
-//nutritionix (install unirest)
-var unirest = require('unirest');
+var dataString = '{ "query": "banana"}';
 
-//searches the food
-app.get = "https://trackapi.nutritionix.com/v2/natural/nutrients"
+var options = {
+    url: 'https://trackapi.nutritionix.com/v2/natural/nutrients',
+    method: 'POST',
+    headers: headers,
+    body: dataString
+};
 
-app.headers({
-  "Content-Type" : "application/json", 
-  "x-app-id" : "0be25bad",
-  "x-app-key" : "dbbf560fe2b7bb29bbc243fa80a4d309"
-});
+function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      body = JSON.parse(body);
+      calories = body.foods[0].nf_calories;
+      total_fat = body.foods[0].nf_total_fat
+      console.log(calories);
+      console.log(total_fat);
+    } else {
+      console.log("Not Found")
+    }
+}
 
-app.query(
-  {
-    "query":"banana",
-   }
-   );
-
-	console.log(res.body);
-
+request(options, callback);
 
 //api endpoint returning the fields from nutrtionix
 app.get('/api/getfields', (req,res) => {
