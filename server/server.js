@@ -85,7 +85,8 @@ function nutrition(food){
     'Content-Type': 'application/json'
 };
 
- var dataString = {"query": ${food}};
+ dataString={'query':food};
+ dataString= dataString.toString();
 
 var options = {
     url: 'https://trackapi.nutritionix.com/v2/natural/nutrients',

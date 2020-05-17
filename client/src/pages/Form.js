@@ -2,6 +2,14 @@ import React from "react";
 import { MDBCol, MDBIcon, MDBContainer, MDBAnimation, MDBRow } from "mdbreact";
 import Navbar from "../components/navbar";
 import axios from "axios";
+const headers = {
+    'accept': 'application/json',
+    'x-app-id': '0be25bad',
+    'x-app-key': '27c1585453778711674404d293fea72d',
+    'x-remote-user-id': '0',
+    'Content-Type': 'application/json'
+};
+
 
 class Form extends React.Component {
   constructor(props) {
