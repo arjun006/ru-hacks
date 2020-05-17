@@ -1,6 +1,6 @@
 const express = require('express');
-const nutrionix = require ('./nutritionix.js');
-const up = require('./routes/api/upload');
+//const nutrionix = require ('./nutritionix.js');
+//const up = require('./routes/api/upload');
 const bodyParser = require('body-parser');
 const multer = require("multer");
 const cors = require('cors');
@@ -11,7 +11,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/api/upload', up);
+//app.use('/api/upload', up);
 
 //image receiving
 
@@ -84,9 +84,9 @@ function nutrition(food){
     'Content-Type': 'application/json'
 };
 
- dataString={'query':food};
- dataString= dataString.toString();
+ dataString=`{"query": "${food}"}`;
 
+console.log(dataString);
 var options = {
     url: 'https://trackapi.nutritionix.com/v2/natural/nutrients',
     method: 'POST',
@@ -94,7 +94,7 @@ var options = {
     body: dataString
 };
 
-function callback(error, response, body) {
+function callback(error, response, body) {  
     if (!error && response.statusCode == 200) {
       body = JSON.parse(body);
       calories = body.foods[0].nf_calories;
